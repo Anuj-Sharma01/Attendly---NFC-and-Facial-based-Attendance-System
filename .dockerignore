@@ -1,0 +1,13 @@
+.git
+.venv
+venv
+__pycache__
+*.py[cod]
+.pytest_cache
+.env
+data/*
+!data/.gitkeep
+Project/main.db
+Project/Photos/*
+!Project/Photos/.gitkeep
+legacy

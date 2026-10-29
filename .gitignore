@@ -1,0 +1,15 @@
+.bridge-venv
+.env
+.venv/
+venv/
+__pycache__/
+.pytest_cache/
+*.py[cod]
+data/*
+!data/.gitkeep
+Project/main.db
+Project/main.db-shm
+Project/main.db-wal
+Project/Photos/*
+!Project/Photos/.gitkeep
+reports/

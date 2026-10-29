@@ -1,0 +1,20 @@
+services:
+  attendance-web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nfc-attendance-web
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      DATA_DIR: /app/data
+      ATTENDANCE_DB: /app/data/main.db
+      ATTENDANCE_PHOTOS_DIR: /app/data/Photos
+      APP_TIMEZONE: Asia/Kolkata
+      PORT: "8000"
+    ports:
+      - "127.0.0.1:8000:8000"
+    volumes:
+      - ./data:/app/data
+    init: true

@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Sign in · Attendly</title><link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}"></head>
+<body class="login-body">
+  <div class="login-orb orb-one"></div><div class="login-orb orb-two"></div>
+  <main class="login-wrap">
+    <a class="brand login-brand" href="#"><span class="brand-mark"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M4 8.5 16 2l12 6.5v15L16 30 4 23.5z" fill="none" stroke="currentColor" stroke-width="2"/><path d="m9 16 4.5 4.5L23 11" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><strong>Attendly</strong><small>NFC · Face attendance</small></span></a>
+    <section class="login-card">
+      <div class="login-icon">✦</div><p class="eyebrow">TEAM WORKSPACE</p><h1>Welcome back</h1><p class="muted">Sign in to manage your lectures, students and attendance records.</p>
+      {% with messages = get_flashed_messages(with_categories=true) %}{% if messages %}<div class="flash-stack">{% for category, message in messages %}<div class="flash {{ category }}">{{ message }}</div>{% endfor %}</div>{% endif %}{% endwith %}
+      <form method="post" class="stack-form">
+        <label>Username<input type="text" name="username" autocomplete="username" required autofocus placeholder="Administrator username"></label>
+        <label>Password<input type="password" name="password" autocomplete="current-password" required placeholder="Your password"></label>
+        <button type="submit" class="btn btn-primary btn-wide">Sign in <span>→</span></button>
+      </form>
+      <div class="login-foot"><span class="pulse-dot"></span> Local network · Protected workspace</div>
+    </section>
+    <p class="login-copy">Built for practical, lecture-wise attendance tracking.</p>
+  </main>
+</body>
+</html>

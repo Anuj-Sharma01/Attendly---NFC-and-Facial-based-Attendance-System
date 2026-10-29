@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="{{ csrf_token }}">
+  <title>{{ title or 'NFC Attendance' }} · Attendly</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}">
+  <script defer src="{{ url_for('static', filename='app.js') }}"></script>
+</head>
+<body class="app-body">
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="{{ url_for('dashboard') }}">
+      <span class="brand-mark"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M4 8.5 16 2l12 6.5v15L16 30 4 23.5z" fill="none" stroke="currentColor" stroke-width="2"/><path d="m9 16 4.5 4.5L23 11" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span><strong>Attendly</strong><small>NFC · Face attendance</small></span>
+    </a>
+    <div class="nav-caption">WORKSPACE</div>
+    <nav class="side-nav" aria-label="Main navigation">
+      <a class="nav-link {{ 'active' if active == 'dashboard' else '' }}" href="{{ url_for('dashboard') }}"><span class="nav-icon">◫</span> Dashboard</a>
+      <a class="nav-link {{ 'active' if active == 'students' else '' }}" href="{{ url_for('students_page') }}"><span class="nav-icon">♙</span> Students <span class="nav-count">{{ _students_nav_count if _students_nav_count is defined else '' }}</span></a>
+      <a class="nav-link {{ 'active' if active == 'lectures' else '' }}" href="{{ url_for('lectures_page') }}"><span class="nav-icon">▦</span> Lecture schedule</a>
+      <a class="nav-link {{ 'active' if active == 'reports' else '' }}" href="{{ url_for('reports_page') }}"><span class="nav-icon">▤</span> Attendance reports</a>
+    </nav>
+    <div class="sidebar-bottom">
+      <div class="hardware-card"><span class="pulse-dot"></span><div><strong>Hardware bridge</strong><small>Run on the PC connected to the Arduino</small></div></div>
+      <div class="user-row"><div class="avatar">{{ session.get('username', 'A')[:1]|upper }}</div><div class="user-meta"><strong>{{ session.get('username', 'Administrator') }}</strong><small>Administrator</small></div><form method="post" action="{{ url_for('logout') }}"><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><button class="icon-button" type="submit" aria-label="Sign out" title="Sign out">↗</button></form></div>
+    </div>
+  </aside>
+  <main class="main-shell">
+    <header class="topbar">
+      <button class="mobile-menu" id="mobile-menu" aria-label="Toggle navigation">☰</button>
+      <div><p class="eyebrow">ATTENDANCE MANAGEMENT</p><h1>{{ title or 'Dashboard' }}</h1></div>
+      <div class="topbar-right"><span class="today-chip"><span class="pulse-dot"></span> {{ today }}</span><span class="top-avatar">{{ session.get('username', 'A')[:1]|upper }}</span></div>
+    </header>
+    <section class="page-content">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}<div class="flash-stack">{% for category, message in messages %}<div class="flash {{ category }}">{{ message }}</div>{% endfor %}</div>{% endif %}
+      {% endwith %}
+      {% block content %}{% endblock %}
+    </section>
+    <footer class="app-footer"><span>Attendly · Local-first attendance management</span><span>Data stays in your team's configured database volume</span></footer>
+  </main>
+</body>
+</html>
